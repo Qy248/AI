@@ -8,6 +8,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 import matplotlib.pyplot as plt
 import seaborn as sns
+import joblib  
 
 # Streamlit page config
 st.set_page_config(
@@ -16,12 +17,14 @@ st.set_page_config(
 )
 
 
+# Function to load the cluster results
 def load_cluster_results():
-    kmeans_df = pd.read_csv(r"kmeans_results.csv")
-    gmm_df = pd.read_csv(r"gmm_results.csv")
-    birch_df = pd.read_csv(r"birch_results.csv")
-    retail = pd.read_csv(r"onlineretail.csv", encoding='ISO-8859-1')
-    return kmeans_df, gmm_df, birch_df,retail
+    kmeans_df = joblib.load(r"kmeans_results.joblib") 
+    gmm_df = joblib.load(r"gmm_results.joblib")  
+    birch_df = joblib.load(r"birch_results.joblib") 
+    retail = joblib.load(r"onlineretail.joblib")
+    
+    return kmeans_df, gmm_df, birch_df, retail
 
 
 # Function to handle zeros or negatives
