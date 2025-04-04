@@ -36,7 +36,7 @@ def main():
     st.title("Customer Segmentation Dashboard")
 
     # Load datasets
-    kmeans_df, gmm_df, birch_df, retail= load_cluster_results()
+    kmeans_df, gmm_df, birch_df, retail = load_cluster_results()
 
     # Sidebar model selector
     st.sidebar.header("Select a Clustering Model")
@@ -58,10 +58,10 @@ def main():
     st.dataframe(retail.head())
 
     # Show cluster visualization
-    if "Recency_log" in df.columns and "L_Frequency" in df.columns:
+    if "Recency" in df.columns and "Frequency" in df.columns:
         st.markdown(f"### Recency vs Frequency Clustering ({model_choice})")
         fig, ax = plt.subplots(figsize=(10, 6))
-        sns.scatterplot(data=df, x="Recency_log", y="L_Frequency", hue=cluster_col, palette="Set2", ax=ax)
+        sns.scatterplot(data=df, x="Recency", y="Frequency", hue=cluster_col, palette="Set2", ax=ax)
         ax.set_title(f"{model_choice} Clusters")
         st.pyplot(fig)
     else:
@@ -89,11 +89,11 @@ def main():
 
     # Prepare data for prediction
     try:
-        features = kmeans_df[['Recency_log', 'L_Frequency', 'L_Monetary']]
+        features = df[['Recency', 'Frequency', 'Monetary']]  # Use original features, not log-transformed
         scaler = StandardScaler()
         scaled_features = scaler.fit_transform(features)
 
-        user_scaled = scaler.transform([[recency_log, frequency_log, monetary_log]])
+        user_scaled = scaler.transform([[recency_days, frequency_input, monetary_input]])
 
         if model_choice == "KMeans":
             model = KMeans(n_clusters=df[cluster_col].nunique(), random_state=42)
@@ -111,7 +111,6 @@ def main():
         st.success(f"You belong to Cluster: {prediction}")
     except Exception as e:
         st.error(f"Prediction error: {e}")
-
 
 # Run the app
 if __name__ == "__main__":
