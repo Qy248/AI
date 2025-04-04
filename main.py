@@ -87,11 +87,6 @@ def main():
     monetary_input = st.slider("Total Spent", min_value=1.0, max_value=300000.0, value=100.0, step=10.0)
     st.write(f"Monetary: {monetary_input}")
 
-    # Log-transform the inputs
-    recency_log = math.log(handle_neg_n_zero(recency_days))
-    frequency_log = math.log(handle_neg_n_zero(frequency_input))
-    monetary_log = math.log(handle_neg_n_zero(monetary_input))
-
     # Prepare data for prediction
     try:
         features = kmeans_df[['Recency_log', 'L_Frequency', 'L_Monetary']]
