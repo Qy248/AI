@@ -20,9 +20,9 @@ st.set_page_config(
 # Function to load the cluster results
 def load_cluster_results():
     kmeans_df = joblib.load(r"kmeans_results.joblib") 
-    gmm_df = joblib.load(r"kmeans_results.joblib")  
+    gmm_df = joblib.load(r"gmm_clustered_rfm_data.joblib")  
     birch_df = joblib.load(r"kmeans_results.joblib") 
-    retail = joblib.load(r"kmeans_results.joblib")
+    retail = joblib.load(r"birch_results.joblib")
     
     return kmeans_df, gmm_df, birch_df, retail
 
