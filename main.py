@@ -22,7 +22,7 @@ def load_cluster_results():
     kmeans_df = joblib.load(r"kmeans_results.joblib") 
     gmm_df = joblib.load(r"gmm_clustered_rfm_data.joblib")  
     birch_df = joblib.load(r"kmeans_results.joblib") 
-    retail = joblib.load(r"birch_results.joblib")
+    retail = joblib.load(r"onlineretail_compressed.joblib")
     
     return kmeans_df, gmm_df, birch_df, retail
 
